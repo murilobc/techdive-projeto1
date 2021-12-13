@@ -50,8 +50,8 @@ public class Banco {
                 .append("2 - Saldo\n")
                 .append("3 - Extrato\n")
                 .append("4 - Transferência\n")
-                .append("6 - Depósito\n")
-                .append("7 - Simular Poupança\n")
+                .append("5 - Depósito\n")
+                .append("6 - Simular Poupança\n")
                 .append("0 - Retornar ao menu anterior");
         System.out.println(retorno);
 
@@ -80,64 +80,89 @@ public class Banco {
     }
 
     private void efetuarSimulacao(Conta conta) {
-        if (!(conta instanceof ContaPoupanca)) {
-            System.out.println("Essa conta não permite simulação");
-            menuCliente();
-        } else {
-            System.out.println("Informe o número de meses");
-            String valor = input.nextLine();
-            int v = 0;
-            if (!valor.isBlank()) {
-                v = Integer.valueOf(valor);
+        if (conta != null) {
+            if (!(conta instanceof ContaPoupanca)) {
+                System.out.println("Essa conta não permite simulação");
+                menuCliente();
+            } else {
+                System.out.println("Informe o número de meses");
+                String valor = input.nextLine();
+                int v = 0;
+                if (!valor.isBlank()) {
+                    v = Integer.valueOf(valor);
+                }
+                ((ContaPoupanca) conta).simulacao(v);
             }
-            ((ContaPoupanca) conta).simulacao(v);
+        } else {
+            System.out.println("Conta inválida");
         }
     }
 
     private void efetuarDeposito(Conta conta) {
-        System.out.println("Informe o valor do depósito");
-        String valor = input.nextLine();
-        double v = 0D;
-        if (!valor.isBlank()) {
-            v = Double.valueOf(valor);
+        if (conta != null) {
+            System.out.println("Informe o valor do depósito");
+            String valor = input.nextLine();
+            double v = 0D;
+            if (!valor.isBlank()) {
+                v = Double.valueOf(valor);
+            }
+            conta.deposito(v);
+        } else {
+            System.out.println("Conta Inválida");
         }
-        conta.deposito(v);
     }
 
     private void efetuarTransferencia(Conta conta) {
-        System.out.println("Informe o valor do saque: ");
-        String valor = input.nextLine();
-        double v = 0D;
-        if (!valor.isBlank()) {
-            v = Double.valueOf(valor);
-        }
-        System.out.println("Informe a conta de destino: ");
-        String contaDestino = input.nextLine();
-        int codigo = 0;
-        if (!contaDestino.isBlank()) {
-            codigo = Integer.valueOf(contaDestino);
-        }
+        if (conta != null) {
+            System.out.println("Informe o valor do saque: ");
+            String valor = input.nextLine();
+            double v = 0D;
+            if (!valor.isBlank()) {
+                v = Double.valueOf(valor);
+            }
+            System.out.println("Informe a conta de destino: ");
+            String contaDestino = input.nextLine();
+            int codigo = 0;
+            if (!contaDestino.isBlank()) {
+                codigo = Integer.valueOf(contaDestino);
+            }
 
-        conta.transferir(servico.buscarConta(codigo, contas), v);
+            conta.transferir(servico.buscarConta(codigo, contas), v);
+        } else {
+            System.out.println("Conta inválida");
+        }
 
     }
 
     private void efetuarExtrato(Conta conta) {
-        conta.extrato();
+        if (conta != null) {
+            conta.extrato();
+        } else {
+            System.out.println("Conta inválida");
+        }
     }
 
     private void efetuarSaldo(Conta conta) {
-        conta.saldo();
+        if (conta != null) {
+            conta.saldo();
+        } else {
+            System.out.println("Conta inválida");
+        }
     }
 
     private void efetuarSaque(Conta conta) {
-        System.out.println("Informe o valor do saque");
-        String valor = input.nextLine();
-        double v = 0D;
-        if (!valor.isBlank()) {
-            v = Integer.valueOf(valor);
+        if (conta != null) {
+            System.out.println("Informe o valor do saque");
+            String valor = input.nextLine();
+            double v = 0D;
+            if (!valor.isBlank()) {
+                v = Integer.valueOf(valor);
+            }
+            conta.saque(v);
+        } else {
+            System.out.println("Conta inválida");
         }
-        conta.saque(v);
+
     }
 
     public void menuFuncionário() {
