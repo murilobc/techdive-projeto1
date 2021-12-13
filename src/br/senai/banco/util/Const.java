@@ -31,4 +31,5 @@ public class Const {
     public static final String OPCAO_EXTRATO = "3";
     public static final String OPCAO_TRASNFERENCIA = "4";
     public static final String OPCAO_DEPOSITO = "5";
+    public static final String OPCAO_SIMULAR = "6";
 }

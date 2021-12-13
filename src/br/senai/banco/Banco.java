@@ -51,7 +51,8 @@ public class Banco {
                 .append("3 - Extrato\n")
                 .append("4 - Transferência\n")
                 .append("6 - Depósito\n")
-                .append("7 - Retornar ao menu anterior");
+                .append("7 - Simular Poupança\n")
+                .append("0 - Retornar ao menu anterior");
         System.out.println(retorno);
 
         String opcao = input.nextLine();
@@ -70,8 +71,26 @@ public class Banco {
                 break;
             case Const.OPCAO_DEPOSITO:
                 efetuarDeposito(conta);
+            case Const.OPCAO_SIMULAR:
+                efetuarSimulacao(conta);
+                break;
             default:
                 inicio();
+        }
+    }
+
+    private void efetuarSimulacao(Conta conta) {
+        if (!(conta instanceof ContaPoupanca)) {
+            System.out.println("Essa conta não permite simulação");
+            menuCliente();
+        } else {
+            System.out.println("Informe o número de meses");
+            String valor = input.nextLine();
+            int v = 0;
+            if (!valor.isBlank()) {
+                v = Integer.valueOf(valor);
+            }
+            ((ContaPoupanca) conta).simulacao(v);
         }
     }
 
@@ -80,7 +99,7 @@ public class Banco {
         String valor = input.nextLine();
         double v = 0D;
         if (!valor.isBlank()) {
-            v = Integer.valueOf(valor);
+            v = Double.valueOf(valor);
         }
         conta.deposito(v);
     }
@@ -90,7 +109,7 @@ public class Banco {
         String valor = input.nextLine();
         double v = 0D;
         if (!valor.isBlank()) {
-            v = Integer.valueOf(valor);
+            v = Double.valueOf(valor);
         }
         System.out.println("Informe a conta de destino: ");
         String contaDestino = input.nextLine();
